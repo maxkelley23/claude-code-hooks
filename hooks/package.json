@@ -1,0 +1,18 @@
+{
+  "name": "claude-code-hooks",
+  "version": "1.0.0",
+  "description": "Hook scripts for Claude Code - safety, formatting, and skill activation",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "tsc --noEmit",
+    "test": "echo 'Run: echo {\"prompt\": \"test\"} | npx tsx skill-activation-prompt.ts'"
+  },
+  "dependencies": {
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0"
+  }
+}

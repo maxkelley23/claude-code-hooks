@@ -1,0 +1,111 @@
+{
+  "version": "1.0",
+  "description": "Skill rules for automatic skill activation based on prompt keywords and patterns",
+  "skills": {
+    "frontend-dev-guidelines": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "React/TypeScript best practices with Tailwind CSS",
+      "promptTriggers": {
+        "keywords": [
+          "component",
+          "react",
+          "frontend",
+          "UI",
+          "page",
+          "modal",
+          "dialog",
+          "form",
+          "tailwind",
+          "shadcn",
+          "styling",
+          "className"
+        ],
+        "intentPatterns": [
+          "(create|add|make|build|update|modify).*?(component|UI|page|modal|dialog|form)",
+          "(how to|best practice).*?(component|react|tailwind)",
+          "(style|design|layout).*?(component|UI)"
+        ]
+      }
+    },
+    "backend-dev-guidelines": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Node.js/Express/TypeScript development patterns",
+      "promptTriggers": {
+        "keywords": [
+          "backend",
+          "API",
+          "route",
+          "endpoint",
+          "controller",
+          "service",
+          "repository",
+          "middleware",
+          "database",
+          "prisma",
+          "express",
+          "validation"
+        ],
+        "intentPatterns": [
+          "(create|add|implement|build).*?(route|endpoint|API|controller|service|repository)",
+          "(fix|handle|debug).*?(error|exception|backend)",
+          "(add|implement).*?(middleware|validation)"
+        ]
+      }
+    },
+    "testing-guidelines": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Testing best practices and patterns",
+      "promptTriggers": {
+        "keywords": [
+          "test",
+          "testing",
+          "jest",
+          "vitest",
+          "unit test",
+          "integration test",
+          "e2e",
+          "mock",
+          "fixture"
+        ],
+        "intentPatterns": [
+          "(write|create|add).*?test",
+          "(how to|best practice).*?test"
+        ]
+      }
+    },
+    "documentation": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "low",
+      "description": "Documentation and README patterns",
+      "promptTriggers": {
+        "keywords": [
+          "documentation",
+          "readme",
+          "docs",
+          "comment",
+          "jsdoc",
+          "tsdoc"
+        ],
+        "intentPatterns": [
+          "(write|create|update).*?(documentation|readme|docs)"
+        ]
+      }
+    }
+  },
+  "notes": {
+    "customization": "Add your own skills with keywords and patterns that match your workflow",
+    "priority_levels": {
+      "critical": "Always shown, required for the task",
+      "high": "Strongly recommended",
+      "medium": "Suggested if relevant",
+      "low": "Optional, shown for reference"
+    }
+  }
+}
