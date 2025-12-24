@@ -37,6 +37,10 @@
         "hooks": [
           {
             "type": "command",
+            "command": "\"C:/Program Files/Git/bin/bash.exe\" -lc \"$HOME/.claude/hooks/post-tool-use-tracker.sh\""
+          },
+          {
+            "type": "command",
             "command": "\"C:/Program Files/Git/bin/bash.exe\" -lc \"$HOME/.claude/hooks/post-tool-use-format.sh\""
           }
         ]

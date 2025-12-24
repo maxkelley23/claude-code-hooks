@@ -37,6 +37,10 @@
         "hooks": [
           {
             "type": "command",
+            "command": "$HOME/.claude/hooks/post-tool-use-tracker.sh"
+          },
+          {
+            "type": "command",
             "command": "$HOME/.claude/hooks/post-tool-use-format.sh"
           }
         ]

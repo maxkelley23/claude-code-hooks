@@ -27,7 +27,7 @@ CLAUDE USES A TOOL ────────────────────�
       "npm install" → ALLOWED
 
 TOOL COMPLETES ────────────────────────────────────────────────────
-  └─► PostToolUse hook → Auto-formats code, tracks changes
+  └─► PostToolUse hooks → Tracks changes, then auto-formats code
 
 CLAUDE FINISHES ───────────────────────────────────────────────────
   └─► Stop hook → Shows completion checklist
@@ -57,14 +57,22 @@ Dangerous bash commands are blocked before execution:
 - Commands accessing `.env`, passwords, API keys
 - Piped curl/wget to shell
 
-### 4. Auto-Formatting
+### 4. Change Tracking
+Tracks which files are edited during a session:
+- Logs all edited files with timestamps
+- Detects affected repos/subprojects (frontend, backend, packages/*)
+- Caches build commands for affected repos
+- Stores TypeScript compilation commands
+- Creates `.claude/tsc-cache/` in your project directory
+
+### 5. Auto-Formatting
 After file edits, automatically runs formatters if available:
 - **JavaScript/TypeScript**: Prettier, ESLint
 - **Python**: Black, Ruff
 - **Go**: gofmt
 - **Rust**: rustfmt
 
-### 5. Completion Checklist
+### 6. Completion Checklist
 When Claude finishes, reminds you about:
 - Uncommitted git changes
 - Available test scripts
@@ -76,7 +84,7 @@ When Claude finishes, reminds you about:
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/claude-code-hooks.git
+git clone https://github.com/maxkelley23/claude-code-hooks.git
 cd claude-code-hooks
 
 # Run the installer
@@ -151,8 +159,8 @@ Customize skill matching in `~/.claude/skill-rules.json`:
     ├── skill-activation-prompt.sh    # Skill detection (wrapper)
     ├── skill-activation-prompt.ts    # Skill detection (logic)
     ├── pre-tool-use-safety.sh        # Command safety validation
-    ├── post-tool-use-format.sh       # Auto-formatting
     ├── post-tool-use-tracker.sh      # Change tracking
+    ├── post-tool-use-format.sh       # Auto-formatting
     ├── stop-verification.sh          # Completion checklist
     ├── package.json                  # Node dependencies
     └── tsconfig.json                 # TypeScript config
