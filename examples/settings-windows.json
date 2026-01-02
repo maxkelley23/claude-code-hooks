@@ -29,6 +29,15 @@
             "command": "\"C:/Program Files/Git/bin/bash.exe\" -lc \"$HOME/.claude/hooks/pre-tool-use-safety.sh\""
           }
         ]
+      },
+      {
+        "matcher": "Edit|MultiEdit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"C:/Program Files/Git/bin/bash.exe\" -lc \"$HOME/.claude/hooks/pre-tool-use-security.sh\""
+          }
+        ]
       }
     ],
     "PostToolUse": [

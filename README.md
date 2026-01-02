@@ -8,6 +8,7 @@ Hooks are shell commands that Claude Code executes at specific moments during yo
 - **Inject context** when sessions start
 - **Suggest skills** based on your prompts
 - **Block dangerous commands** before they run
+- **Warn about security vulnerabilities** in code edits
 - **Auto-format code** after edits
 - **Show checklists** when Claude finishes
 
@@ -22,9 +23,9 @@ YOU TYPE A PROMPT ────────────────────�
       "create a react component" → Suggests frontend-dev-guidelines
 
 CLAUDE USES A TOOL ────────────────────────────────────────────────
-  └─► PreToolUse hook → Validates safety
-      "rm -rf /" → BLOCKED
-      "npm install" → ALLOWED
+  └─► PreToolUse hooks
+      Bash → Validates command safety ("rm -rf /" → BLOCKED)
+      Edit → Checks for security vulnerabilities (eval, XSS → WARNING)
 
 TOOL COMPLETES ────────────────────────────────────────────────────
   └─► PostToolUse hooks → Tracks changes, then auto-formats code
@@ -77,6 +78,23 @@ When Claude finishes, reminds you about:
 - Uncommitted git changes
 - Available test scripts
 - TypeScript compilation
+
+### 7. Security Warnings
+Detects potential security vulnerabilities when editing code:
+
+**JavaScript/TypeScript:**
+- Dynamic code execution patterns
+- DOM-based XSS vectors
+- Command injection risks
+
+**Python:**
+- Unsafe deserialization
+- Shell command injection
+
+**GitHub Actions:**
+- Workflow expression injection risks
+
+Each warning is shown once per file per session to avoid noise. See `hooks/pre-tool-use-security.sh` for the full list of patterns.
 
 ## Installation
 
@@ -159,6 +177,7 @@ Customize skill matching in `~/.claude/skill-rules.json`:
     ├── skill-activation-prompt.sh    # Skill detection (wrapper)
     ├── skill-activation-prompt.ts    # Skill detection (logic)
     ├── pre-tool-use-safety.sh        # Command safety validation
+    ├── pre-tool-use-security.sh      # Code security warnings
     ├── post-tool-use-tracker.sh      # Change tracking
     ├── post-tool-use-format.sh       # Auto-formatting
     ├── stop-verification.sh          # Completion checklist
@@ -224,6 +243,22 @@ case "$ext" in
         your-formatter "$file_path" && format_msg "your-formatter"
         ;;
 esac
+```
+
+### Adding Security Patterns
+
+Edit `hooks/pre-tool-use-security.sh` to add new vulnerability checks:
+
+```bash
+# Check for your pattern
+if [[ "$CONTENT" == *"your-dangerous-pattern"* ]]; then
+    WARNING_KEY="${FILE_PATH}-your_pattern"
+    if ! warning_shown "$WARNING_KEY"; then
+        save_warning "$WARNING_KEY"
+        echo "⚠️ Security Warning: Description of the risk and mitigation." >&2
+        exit 2
+    fi
+fi
 ```
 
 ## How It Works
