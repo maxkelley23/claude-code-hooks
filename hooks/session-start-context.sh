@@ -2,16 +2,24 @@
 # SessionStart hook - Inject useful context at session start
 # Provides git status, recent commits, and TODO items
 
-set -e
+# Read input with timeout to prevent hanging
+if command -v timeout >/dev/null 2>&1; then
+    input=$(timeout 2 cat 2>/dev/null || echo "{}")
+else
+    # Fallback: read with a short timeout using read command
+    input=""
+    while IFS= read -r -t 2 line; do
+        input+="$line"$'\n'
+    done
+    [[ -z "$input" ]] && input="{}"
+fi
 
 if ! command -v jq >/dev/null 2>&1; then
     exit 0
 fi
 
-# Read input (contains session info)
-input=$(cat)
-session_id=$(echo "$input" | jq -r '.session_id // "unknown"')
-cwd=$(echo "$input" | jq -r '.cwd // empty')
+session_id=$(echo "$input" | jq -r '.session_id // "unknown"' 2>/dev/null)
+cwd=$(echo "$input" | jq -r '.cwd // empty' 2>/dev/null)
 
 to_posix_path() {
     local path="$1"
@@ -20,7 +28,7 @@ to_posix_path() {
         return
     fi
     if command -v cygpath >/dev/null 2>&1; then
-        cygpath -u "$path"
+        cygpath -u "$path" 2>/dev/null
         return
     fi
     if [[ "$path" =~ ^[A-Za-z]:[\\/].* ]]; then
@@ -35,7 +43,7 @@ to_posix_path() {
 
 # Change to project directory if provided
 cwd=$(to_posix_path "$cwd")
-if [[ -n "$cwd" ]]; then
+if [[ -n "$cwd" ]] && [[ -d "$cwd" ]]; then
     cd "$cwd" 2>/dev/null || true
 fi
 
@@ -88,7 +96,7 @@ for todo_file in "TODO.md" "TODO" "todo.md" ".todo" "TASKS.md"; do
         echo ""
         break
     fi
-    done
+done
 
 # Check for CLAUDE.md
 if [[ -f "CLAUDE.md" ]]; then
@@ -96,7 +104,7 @@ if [[ -f "CLAUDE.md" ]]; then
 fi
 
 # Check for package.json scripts
-if [[ -f "package.json" ]]; then
+if [[ -f "package.json" ]] && command -v jq >/dev/null 2>&1; then
     echo ""
     echo "AVAILABLE SCRIPTS:"
     jq -r '.scripts // {} | keys[]' package.json 2>/dev/null | head -8 | sed 's/^/  - /' || true

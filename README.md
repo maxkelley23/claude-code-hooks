@@ -213,25 +213,81 @@ literal_patterns=(
 )
 ```
 
-### Adding Skill Keywords
+### Skill Rules Configuration
 
-Edit `skill-rules.json` to add new skills or keywords:
+The repository includes a comprehensive `skill-rules.json` with 100+ pre-configured skills covering frontend, backend, DevOps, security, and more. This section explains how to customize it.
+
+#### Adding a New Skill
+
+Add a new entry to `~/.claude/skill-rules.json`:
 
 ```json
 {
   "skills": {
-    "your-skill-name": {
+    "my-new-skill": {
       "type": "domain",
-      "enforcement": "suggest",
       "priority": "high",
       "promptTriggers": {
-        "keywords": ["your", "keywords"],
-        "intentPatterns": ["regex patterns"]
+        "keywords": ["keyword1", "keyword2", "keyword3"],
+        "intentPatterns": [
+          "(create|build|make).*?(thing|feature)",
+          "(how to|best practice).*?topic"
+        ]
       }
     }
   }
 }
 ```
+
+#### Modifying an Existing Skill
+
+Find the skill in `~/.claude/skill-rules.json` and update its triggers:
+
+```json
+"frontend-design": {
+  "type": "domain",
+  "priority": "high",
+  "promptTriggers": {
+    "keywords": ["component", "react", "vue", "svelte", "angular"],
+    "intentPatterns": ["(create|build|design).*?(ui|interface|component)"]
+  }
+}
+```
+
+#### Removing a Skill
+
+Either delete the skill entry entirely, or remove it from being matched by clearing its triggers:
+
+```json
+"unwanted-skill": {
+  "type": "domain",
+  "priority": "low",
+  "promptTriggers": {
+    "keywords": [],
+    "intentPatterns": []
+  }
+}
+```
+
+#### Project-Specific Overrides
+
+Create a project-local `<project>/.claude/skill-rules.json` file. It will be checked before the global `~/.claude/skill-rules.json`.
+
+#### Priority Levels
+
+| Priority | Behavior |
+|----------|----------|
+| `critical` | Content auto-injected into context, always shown first |
+| `high` | Content auto-injected (up to 3 total with critical) |
+| `medium` | Listed as optional reference |
+| `low` | Listed as optional reference |
+
+#### Skill Types
+
+| Type | Purpose |
+|------|---------|
+| `domain` | Core capabilities (frontend, backend, DevOps) |
+| `guardrail` | Protective/compliance requirements |
 
 ### Adding Formatters
 
@@ -297,6 +353,18 @@ fi
 ```
 
 ## Troubleshooting
+
+### Enable Debug Logging
+
+Set the environment variable to enable detailed logging:
+
+```bash
+export CLAUDE_HOOKS_DEBUG=true
+```
+
+Logs are written to `~/.claude/logs/`:
+- `skill-activation.log` - Skill matching details
+- `stop-verification.log` - Completion checklist details
 
 ### Hooks not running?
 

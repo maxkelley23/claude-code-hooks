@@ -1,111 +1,899 @@
 {
-  "version": "1.0",
-  "description": "Skill rules for automatic skill activation based on prompt keywords and patterns",
+  "version": "2.0",
+  "description": "Complete skill activation rules - ALL 100+ plugin skills mapped",
   "skills": {
-    "frontend-dev-guidelines": {
+    "api-design-principles": {
       "type": "domain",
-      "enforcement": "suggest",
       "priority": "high",
-      "description": "React/TypeScript best practices with Tailwind CSS",
       "promptTriggers": {
-        "keywords": [
-          "component",
-          "react",
-          "frontend",
-          "UI",
-          "page",
-          "modal",
-          "dialog",
-          "form",
-          "tailwind",
-          "shadcn",
-          "styling",
-          "className"
-        ],
-        "intentPatterns": [
-          "(create|add|make|build|update|modify).*?(component|UI|page|modal|dialog|form)",
-          "(how to|best practice).*?(component|react|tailwind)",
-          "(style|design|layout).*?(component|UI)"
-        ]
+        "keywords": ["API", "REST", "GraphQL", "endpoint", "route", "controller", "CRUD", "pagination", "versioning", "OpenAPI", "swagger"],
+        "intentPatterns": ["(create|build|design).*?(API|endpoint|route)", "(REST|GraphQL).*?(design|pattern)"]
       }
     },
-    "backend-dev-guidelines": {
+    "architecture-patterns": {
       "type": "domain",
-      "enforcement": "suggest",
       "priority": "high",
-      "description": "Node.js/Express/TypeScript development patterns",
       "promptTriggers": {
-        "keywords": [
-          "backend",
-          "API",
-          "route",
-          "endpoint",
-          "controller",
-          "service",
-          "repository",
-          "middleware",
-          "database",
-          "prisma",
-          "express",
-          "validation"
-        ],
-        "intentPatterns": [
-          "(create|add|implement|build).*?(route|endpoint|API|controller|service|repository)",
-          "(fix|handle|debug).*?(error|exception|backend)",
-          "(add|implement).*?(middleware|validation)"
-        ]
+        "keywords": ["architecture", "DDD", "hexagonal", "clean architecture", "CQRS", "event sourcing", "layered", "onion"],
+        "intentPatterns": ["(design|architect|structure).*?(system|application|service)", "(architecture).*?(pattern|design)"]
       }
     },
-    "testing-guidelines": {
+    "microservices-patterns": {
       "type": "domain",
-      "enforcement": "suggest",
       "priority": "medium",
-      "description": "Testing best practices and patterns",
       "promptTriggers": {
-        "keywords": [
-          "test",
-          "testing",
-          "jest",
-          "vitest",
-          "unit test",
-          "integration test",
-          "e2e",
-          "mock",
-          "fixture"
-        ],
-        "intentPatterns": [
-          "(write|create|add).*?test",
-          "(how to|best practice).*?test"
-        ]
+        "keywords": ["microservice", "service mesh", "API gateway", "circuit breaker", "saga", "event-driven", "distributed"],
+        "intentPatterns": ["(microservice|distributed).*?(pattern|architecture)", "(service).*?(communication|discovery)"]
       }
     },
-    "documentation": {
+    "temporal-python-testing": {
       "type": "domain",
-      "enforcement": "suggest",
       "priority": "low",
-      "description": "Documentation and README patterns",
       "promptTriggers": {
-        "keywords": [
-          "documentation",
-          "readme",
-          "docs",
-          "comment",
-          "jsdoc",
-          "tsdoc"
-        ],
-        "intentPatterns": [
-          "(write|create|update).*?(documentation|readme|docs)"
-        ]
+        "keywords": ["Temporal", "workflow engine", "durable execution", "Temporal testing"],
+        "intentPatterns": ["(Temporal).*?(workflow|test)"]
+      }
+    },
+    "workflow-orchestration-patterns": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["workflow", "orchestration", "state machine", "saga", "choreography", "Temporal", "Airflow"],
+        "intentPatterns": ["(workflow|orchestration).*?(pattern|design)", "(state machine|saga)"]
+      }
+    },
+    "deployment-pipeline-design": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["deployment", "pipeline", "CI/CD", "release", "staging", "production", "blue-green", "canary"],
+        "intentPatterns": ["(deployment|release).*?(pipeline|strategy)", "(CI/CD).*?(pipeline|design)"]
+      }
+    },
+    "github-actions-templates": {
+      "type": "domain",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["GitHub Actions", "workflow", "CI/CD", ".github/workflows", "actions", "runner"],
+        "intentPatterns": ["(GitHub Actions).*?(workflow|pipeline|CI)", "(CI/CD).*?(GitHub)"]
+      }
+    },
+    "gitlab-ci-patterns": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["GitLab CI", ".gitlab-ci.yml", "GitLab pipeline", "GitLab runner"],
+        "intentPatterns": ["(GitLab).*?(CI|pipeline|workflow)"]
+      }
+    },
+    "secrets-management": {
+      "type": "domain",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["secrets", "vault", "environment variables", "credentials", "API keys", "HashiCorp", "AWS Secrets"],
+        "intentPatterns": ["(secret|credential|API key).*?(manage|store|rotate)", "(vault|secrets manager)"]
+      }
+    },
+    "cost-optimization": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["cost optimization", "cloud cost", "billing", "savings", "reserved instances", "spot instances"],
+        "intentPatterns": ["(cost|billing).*?(optimize|reduce|save)", "(cloud).*?(cost|spending)"]
+      }
+    },
+    "hybrid-cloud-networking": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["hybrid cloud", "VPN", "Direct Connect", "ExpressRoute", "peering", "transit gateway"],
+        "intentPatterns": ["(hybrid|multi).*?(cloud|networking)", "(VPN|Direct Connect|ExpressRoute)"]
+      }
+    },
+    "multi-cloud-architecture": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["multi-cloud", "cloud agnostic", "AWS", "Azure", "GCP", "cloud provider"],
+        "intentPatterns": ["(multi-cloud|cloud agnostic).*?(architecture|strategy)", "(AWS|Azure|GCP).*?(together|combine)"]
+      }
+    },
+    "terraform-module-library": {
+      "type": "domain",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["Terraform", "infrastructure", "IaC", "module", "provider", "state", "HCL", "tfvars"],
+        "intentPatterns": ["(Terraform).*?(module|infrastructure)", "(infrastructure as code|IaC).*?(Terraform)"]
+      }
+    },
+    "auth-implementation-patterns": {
+      "type": "domain",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["auth", "authentication", "authorization", "JWT", "OAuth", "login", "session", "token", "RBAC", "SSO", "OIDC"],
+        "intentPatterns": ["(implement|add|build).*?(auth|login|authentication)", "(JWT|OAuth|session|SSO).*?(authentication|authorization)"]
+      }
+    },
+    "code-review-excellence": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["code review", "PR review", "pull request", "review feedback", "review comments"],
+        "intentPatterns": ["(code|PR|pull request).*?(review)", "(review).*?(code|changes)"]
+      }
+    },
+    "debugging-strategies": {
+      "type": "domain",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["debug", "debugging", "bug", "error", "issue", "problem", "trace", "breakpoint", "profiling", "stack trace"],
+        "intentPatterns": ["(debug|fix|investigate).*?(bug|error|issue|problem)", "(why|what).*?(not working|broken|failing)"]
+      }
+    },
+    "e2e-testing-patterns": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["e2e", "end-to-end", "Playwright", "Cypress", "Selenium", "browser test", "integration test"],
+        "intentPatterns": ["(e2e|end-to-end|integration).*?(test|testing)", "(Playwright|Cypress|Selenium).*?(test)"]
+      }
+    },
+    "error-handling-patterns": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["error handling", "exception", "try catch", "error boundary", "fallback", "recovery", "retry"],
+        "intentPatterns": ["(handle|catch|manage).*?(error|exception)", "(error|exception).*?(handling|pattern)"]
+      }
+    },
+    "git-advanced-workflows": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["git", "rebase", "merge", "branch", "cherry-pick", "bisect", "stash", "reflog", "squash"],
+        "intentPatterns": ["(git).*?(workflow|strategy|best practice)", "(rebase|merge|branch).*?(strategy)"]
+      }
+    },
+    "monorepo-management": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["monorepo", "workspace", "turborepo", "nx", "lerna", "pnpm workspace", "yarn workspace"],
+        "intentPatterns": ["(monorepo).*?(setup|manage|structure)", "(turborepo|nx|lerna)"]
+      }
+    },
+    "sql-optimization-patterns": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["SQL", "query optimization", "index", "explain", "slow query", "N+1", "join optimization"],
+        "intentPatterns": ["(optimize|improve).*?(SQL|query|database)", "(slow|performance).*?(query|SQL|database)"]
+      }
+    },
+    "javascript-testing-patterns": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["Jest", "Vitest", "Mocha", "testing", "mock", "stub", "spy", "unit test", "JavaScript test"],
+        "intentPatterns": ["(test|testing).*?(JavaScript|TypeScript|React|Node)", "(Jest|Vitest|Mocha).*?(test|mock)"]
+      }
+    },
+    "modern-javascript-patterns": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["ES6", "ES2020", "async await", "promise", "destructuring", "spread", "module", "import export"],
+        "intentPatterns": ["(modern|ES6|ES2020).*?(JavaScript|JS)", "(async|promise|module).*?(pattern)"]
+      }
+    },
+    "nodejs-backend-patterns": {
+      "type": "domain",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["Node.js", "Express", "Fastify", "Koa", "middleware", "backend", "server", "HTTP server"],
+        "intentPatterns": ["(Node|Express|Fastify).*?(server|API|backend)", "(backend|server).*?(Node|JavaScript)"]
+      }
+    },
+    "typescript-advanced-types": {
+      "type": "domain",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["TypeScript", "generic", "conditional type", "mapped type", "utility type", "infer", "type guard", "discriminated union"],
+        "intentPatterns": ["(type|TypeScript).*?(safe|generic|advanced)", "(create|build).*?(type|interface|generic)"]
+      }
+    },
+    "langchain-architecture": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["LangChain", "agent", "chain", "tool", "memory", "retriever", "LangGraph"],
+        "intentPatterns": ["(LangChain|LangGraph).*?(agent|chain|tool)", "(build|create).*?(AI agent|LLM application)"]
+      }
+    },
+    "llm-evaluation": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["LLM evaluation", "benchmark", "metrics", "hallucination", "accuracy", "eval", "RAGAS"],
+        "intentPatterns": ["(evaluate|test|measure).*?(LLM|AI|model)", "(LLM|AI).*?(accuracy|quality|performance)"]
+      }
+    },
+    "prompt-engineering-patterns": {
+      "type": "domain",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["prompt", "LLM", "GPT", "Claude", "few-shot", "chain-of-thought", "system prompt", "prompt template"],
+        "intentPatterns": ["(write|create|optimize).*?(prompt|system prompt)", "(LLM|AI|GPT|Claude).*?(prompt|instruction)"]
+      }
+    },
+    "rag-implementation": {
+      "type": "domain",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["RAG", "retrieval", "embedding", "vector", "knowledge base", "semantic search", "chunking", "Pinecone", "Chroma"],
+        "intentPatterns": ["(RAG|retrieval|embedding).*?(implementation|system)", "(vector|semantic).*?(search|database)"]
+      }
+    },
+    "distributed-tracing": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["tracing", "OpenTelemetry", "Jaeger", "Zipkin", "span", "trace", "observability"],
+        "intentPatterns": ["(distributed).*?(tracing|trace)", "(OpenTelemetry|Jaeger).*?(tracing)"]
+      }
+    },
+    "grafana-dashboards": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["Grafana", "dashboard", "metrics visualization", "panel", "Grafana alert"],
+        "intentPatterns": ["(Grafana).*?(dashboard|panel)", "(dashboard|metrics).*?(Grafana)"]
+      }
+    },
+    "prometheus-configuration": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["Prometheus", "metrics", "alerting", "scraping", "PromQL", "alert rules"],
+        "intentPatterns": ["(Prometheus).*?(config|setup|alerting)", "(monitoring|metrics).*?(Prometheus)"]
+      }
+    },
+    "slo-implementation": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["SLO", "SLI", "SLA", "reliability", "error budget", "availability", "latency target"],
+        "intentPatterns": ["(SLO|SLI|SLA).*?(implementation|define)", "(reliability|availability).*?(target|goal)"]
+      }
+    },
+    "billing-automation": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["billing", "invoice", "subscription", "recurring", "metered", "usage-based billing"],
+        "intentPatterns": ["(billing|invoice|subscription).*?(automation|system)", "(recurring|metered).*?(billing|payment)"]
+      }
+    },
+    "paypal-integration": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["PayPal", "PayPal checkout", "PayPal API", "PayPal webhook"],
+        "intentPatterns": ["(PayPal).*?(integration|checkout|payment)"]
+      }
+    },
+    "pci-compliance": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["PCI", "compliance", "card data", "tokenization", "secure payment", "PCI DSS"],
+        "intentPatterns": ["(PCI).*?(compliance|compliant)", "(payment).*?(security|compliance)"]
+      }
+    },
+    "stripe-integration": {
+      "type": "domain",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["Stripe", "payment", "checkout", "subscription", "invoice", "webhook", "Stripe API"],
+        "intentPatterns": ["(Stripe).*?(integration|payment|checkout)", "(payment|subscription).*?(Stripe)"]
+      }
+    },
+    "stripe-best-practices": {
+      "type": "domain",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["Stripe", "Stripe best practice", "Stripe webhook", "Stripe security"],
+        "intentPatterns": ["(Stripe).*?(best practice|security|webhook)"]
+      }
+    },
+    "sast-configuration": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["SAST", "security scan", "static analysis", "vulnerability", "Snyk", "SonarQube", "CodeQL"],
+        "intentPatterns": ["(SAST|security).*?(scan|analysis)", "(vulnerability).*?(scan|check)"]
+      }
+    },
+    "frontend-design": {
+      "type": "domain",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["component", "react", "frontend", "UI", "page", "modal", "dialog", "form", "tailwind", "shadcn", "styling", "layout", "design", "interface", "dashboard", "landing page"],
+        "intentPatterns": ["(create|build|make|design).*?(component|UI|page|modal|dialog|form|interface|dashboard)", "(style|design|layout).*?(component|page|app)"]
+      }
+    },
+    "writing-rules": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["RULES.md", "project rules", "coding standards", "style guide"],
+        "intentPatterns": ["(write|create).*?(rules|standards|guidelines)"]
+      }
+    },
+    "deploy": {
+      "type": "domain",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["deploy", "Vercel", "deployment", "ship", "publish", "go live"],
+        "intentPatterns": ["(deploy|ship|publish).*?(Vercel|app|site)", "(Vercel).*?(deploy)"]
+      }
+    },
+    "logs": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["logs", "Vercel logs", "deployment logs", "function logs", "runtime logs"],
+        "intentPatterns": ["(Vercel).*?(logs)", "(check|view|see).*?(logs)"]
+      }
+    },
+    "setup": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["setup", "Vercel setup", "project setup", "initialize", "configure Vercel"],
+        "intentPatterns": ["(setup|configure|initialize).*?(Vercel|project)"]
+      }
+    },
+    "brainstorming": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["brainstorm", "ideas", "ideation", "explore options", "possibilities"],
+        "intentPatterns": ["(brainstorm|ideate).*?(solution|approach|idea)", "(explore).*?(options|possibilities)"]
+      }
+    },
+    "dispatching-parallel-agents": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["parallel", "subagent", "dispatch", "concurrent", "multiple agents"],
+        "intentPatterns": ["(parallel|concurrent).*?(agent|task)", "(dispatch).*?(agent|subagent)"]
+      }
+    },
+    "executing-plans": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["execute plan", "follow plan", "implement plan", "run plan"],
+        "intentPatterns": ["(execute|implement|follow).*?(plan)"]
+      }
+    },
+    "finishing-a-development-branch": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["finish branch", "complete branch", "merge branch", "branch done"],
+        "intentPatterns": ["(finish|complete|merge).*?(branch)", "(branch).*?(done|ready)"]
+      }
+    },
+    "receiving-code-review": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["review my code", "code review feedback", "PR feedback", "review comments"],
+        "intentPatterns": ["(review).*?(my|this).*?(code|PR)", "(feedback).*?(code|PR)"]
+      }
+    },
+    "requesting-code-review": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["request review", "ask for review", "review request", "PR review"],
+        "intentPatterns": ["(request|ask for).*?(review)", "(PR|pull request).*?(review)"]
+      }
+    },
+    "subagent-driven-development": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["subagent", "agent driven", "delegate", "spawn agent"],
+        "intentPatterns": ["(subagent|agent).*?(development|driven)", "(delegate|spawn).*?(agent|task)"]
+      }
+    },
+    "systematic-debugging": {
+      "type": "domain",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["systematic debug", "methodical debug", "debug process", "root cause"],
+        "intentPatterns": ["(systematic|methodical).*?(debug)", "(find).*?(root cause|bug)"]
+      }
+    },
+    "test-driven-development": {
+      "type": "domain",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["TDD", "test driven", "test first", "red green refactor", "write tests first"],
+        "intentPatterns": ["(TDD|test driven).*?(development)", "(test first|write tests).*?(before|first)"]
+      }
+    },
+    "using-git-worktrees": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["worktree", "git worktree", "multiple branches", "parallel branches"],
+        "intentPatterns": ["(git).*?(worktree)", "(worktree)"]
+      }
+    },
+    "using-superpowers": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["superpowers", "superpower plugin", "enhanced capabilities"],
+        "intentPatterns": ["(use|enable).*?(superpowers)"]
+      }
+    },
+    "verification-before-completion": {
+      "type": "domain",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["verify", "verification", "check before", "validate", "confirm working"],
+        "intentPatterns": ["(verify|validate|check).*?(before|completion)", "(confirm).*?(working|done)"]
+      }
+    },
+    "writing-plans": {
+      "type": "domain",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["plan", "planning", "write a plan", "create plan", "implementation plan", "project plan"],
+        "intentPatterns": ["(write|create|make).*?(plan)", "(plan).*?(implementation|project|task)"]
+      }
+    },
+    "writing-skills": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["write skill", "create skill", "SKILL.md", "skill file"],
+        "intentPatterns": ["(write|create).*?(skill)", "(skill).*?(file|md)"]
+      }
+    },
+    "mcp-cli": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["mcp cli", "MCP command line", "mcp tool"],
+        "intentPatterns": ["(MCP).*?(cli|command)"]
+      }
+    },
+    "using-tmux-for-interactive-commands": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["tmux", "terminal multiplexer", "interactive command", "long running"],
+        "intentPatterns": ["(tmux).*?(command|terminal)", "(interactive|long running).*?(command)"]
+      }
+    },
+    "fastapi-templates": {
+      "type": "domain",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["FastAPI", "Pydantic", "async API", "Python API", "Starlette"],
+        "intentPatterns": ["(FastAPI).*?(API|endpoint|app)", "(Python).*?(API|FastAPI)"]
+      }
+    },
+    "defi-protocol-templates": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["DeFi", "protocol", "liquidity", "yield", "AMM", "lending protocol"],
+        "intentPatterns": ["(DeFi|defi).*?(protocol|template)", "(liquidity|yield|AMM)"]
+      }
+    },
+    "nft-standards": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["NFT", "ERC721", "ERC1155", "token standard", "metadata"],
+        "intentPatterns": ["(NFT).*?(standard|contract)", "(ERC721|ERC1155)"]
+      }
+    },
+    "solidity-security": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["Solidity", "smart contract security", "reentrancy", "overflow", "audit"],
+        "intentPatterns": ["(Solidity|smart contract).*?(security|audit)", "(reentrancy|overflow)"]
+      }
+    },
+    "web3-testing": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["web3 test", "Hardhat", "Foundry", "smart contract test", "fork test"],
+        "intentPatterns": ["(web3|smart contract).*?(test)", "(Hardhat|Foundry).*?(test)"]
+      }
+    },
+    "postgresql": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["PostgreSQL", "Postgres", "psql", "pg_", "JSONB", "CTE", "window function", "PL/pgSQL"],
+        "intentPatterns": ["(PostgreSQL|Postgres).*?(query|design|schema)", "(database).*?(PostgreSQL|Postgres)"]
+      }
+    },
+    "angular-migration": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["Angular migration", "Angular upgrade", "AngularJS to Angular", "Angular version"],
+        "intentPatterns": ["(Angular).*?(migration|upgrade)", "(migrate).*?(Angular)"]
+      }
+    },
+    "database-migration": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["database migration", "schema migration", "Prisma migrate", "Drizzle", "Knex", "Flyway"],
+        "intentPatterns": ["(database|schema).*?(migration)", "(migrate).*?(database|schema)"]
+      }
+    },
+    "dependency-upgrade": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["upgrade", "dependency update", "npm update", "package upgrade", "breaking changes"],
+        "intentPatterns": ["(upgrade|update).*?(dependency|package|npm)", "(breaking).*?(changes)"]
+      }
+    },
+    "react-modernization": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["React modernize", "class to hooks", "React upgrade", "functional component", "hooks migration"],
+        "intentPatterns": ["(React).*?(modernize|migrate|upgrade)", "(class component).*?(functional|hooks)"]
+      }
+    },
+    "gitops-workflow": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["GitOps", "ArgoCD", "Flux", "declarative", "git as source of truth"],
+        "intentPatterns": ["(GitOps).*?(workflow|setup)", "(ArgoCD|Flux)"]
+      }
+    },
+    "helm-chart-scaffolding": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["Helm", "chart", "values.yaml", "template", "release", "Helm chart"],
+        "intentPatterns": ["(Helm).*?(chart|template)", "(create).*?(Helm chart)"]
+      }
+    },
+    "k8s-manifest-generator": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["Kubernetes", "K8s", "manifest", "deployment", "service", "pod", "ConfigMap", "YAML"],
+        "intentPatterns": ["(Kubernetes|K8s).*?(manifest|deployment|config)", "(deploy).*?(Kubernetes|K8s)"]
+      }
+    },
+    "k8s-security-policies": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["K8s security", "pod security", "network policy", "RBAC", "security context"],
+        "intentPatterns": ["(Kubernetes|K8s).*?(security|policy)", "(pod|network).*?(security|policy)"]
+      }
+    },
+    "ml-pipeline-workflow": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["ML pipeline", "MLOps", "training pipeline", "model pipeline", "Kubeflow", "MLflow"],
+        "intentPatterns": ["(ML|machine learning).*?(pipeline|workflow)", "(MLOps|Kubeflow|MLflow)"]
+      }
+    },
+    "async-python-patterns": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["asyncio", "async Python", "await", "coroutine", "aiohttp", "async def"],
+        "intentPatterns": ["(async|asyncio).*?(Python)", "(Python).*?(async|concurrent)"]
+      }
+    },
+    "python-packaging": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["Python package", "setup.py", "pyproject.toml", "poetry", "pip", "wheel", "PyPI"],
+        "intentPatterns": ["(Python).*?(package|packaging)", "(publish|upload).*?(PyPI|package)"]
+      }
+    },
+    "python-performance-optimization": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["Python performance", "Python optimization", "profiling", "cProfile", "slow Python"],
+        "intentPatterns": ["(Python).*?(performance|optimize|slow)", "(profile|benchmark).*?(Python)"]
+      }
+    },
+    "python-testing-patterns": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["pytest", "unittest", "mock", "fixture", "parametrize", "Python test"],
+        "intentPatterns": ["(pytest|unittest).*?(test|mock)", "(Python).*?(test|testing)"]
+      }
+    },
+    "uv-package-manager": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["uv", "uv pip", "uv venv", "astral uv", "fast pip"],
+        "intentPatterns": ["(uv).*?(install|package|venv)", "(astral).*?(uv)"]
+      }
+    },
+    "bash-defensive-patterns": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["bash", "shell script", "defensive bash", "set -e", "set -u", "error handling bash"],
+        "intentPatterns": ["(bash|shell).*?(script|defensive|safe)", "(bash).*?(error handling)"]
+      }
+    },
+    "bats-testing-patterns": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["bats", "bash test", "shell test", "bats-core"],
+        "intentPatterns": ["(bats|bash).*?(test)", "(test).*?(bash|shell)"]
+      }
+    },
+    "shellcheck-configuration": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["shellcheck", "shell lint", "bash lint", "SC2086"],
+        "intentPatterns": ["(shellcheck).*?(config|lint)", "(lint).*?(bash|shell)"]
+      }
+    },
+    "agent-development": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["Claude agent", "agent development", "custom agent", "agent.md"],
+        "intentPatterns": ["(agent).*?(development|create|build)", "(Claude).*?(agent)"]
+      }
+    },
+    "command-development": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["slash command", "custom command", "command development"],
+        "intentPatterns": ["(command).*?(development|create)", "(slash).*?(command)"]
+      }
+    },
+    "hook-development": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["hook", "PreToolUse", "PostToolUse", "SessionStart", "UserPromptSubmit", "hook development"],
+        "intentPatterns": ["(create|build|write).*?(hook)", "(Claude Code).*?(hook)"]
+      }
+    },
+    "mcp-integration": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["MCP", "Model Context Protocol", "MCP server", "tool server", "MCP integration"],
+        "intentPatterns": ["(MCP|Model Context Protocol).*?(server|integration)", "(create|build).*?(MCP server)"]
+      }
+    },
+    "plugin-settings": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["plugin settings", "plugin config", "plugin.json"],
+        "intentPatterns": ["(plugin).*?(settings|config)"]
+      }
+    },
+    "plugin-structure": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["plugin structure", "plugin layout", "plugin folder", "plugin organization"],
+        "intentPatterns": ["(plugin).*?(structure|layout|organization)"]
+      }
+    },
+    "skill-development": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["skill", "SKILL.md", "skill development", "create skill", "custom skill"],
+        "intentPatterns": ["(create|build|write).*?(skill)", "(Claude Code).*?(skill)"]
+      }
+    },
+    "algorithmic-art": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["algorithmic art", "generative art", "procedural", "creative coding", "p5.js"],
+        "intentPatterns": ["(algorithmic|generative).*?(art)", "(procedural).*?(art|graphics)"]
+      }
+    },
+    "canvas-design": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["canvas", "HTML canvas", "2D graphics", "canvas API", "drawing"],
+        "intentPatterns": ["(canvas).*?(design|draw)", "(HTML).*?(canvas)"]
+      }
+    },
+    "slack-gif-creator": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["Slack gif", "gif creator", "animated gif", "Slack emoji"],
+        "intentPatterns": ["(Slack).*?(gif|emoji)", "(create).*?(gif)"]
+      }
+    },
+    "theme-factory": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["theme", "theming", "color scheme", "design system", "theme generator"],
+        "intentPatterns": ["(theme|theming).*?(create|generate)", "(color scheme|design system)"]
+      }
+    },
+    "postgres-schema-design": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["Postgres schema", "database schema", "table design", "schema design", "normalization"],
+        "intentPatterns": ["(Postgres|database).*?(schema|design)", "(schema).*?(design|create)"]
+      }
+    },
+    "artifacts-builder": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["artifact", "build artifact", "artifact builder"],
+        "intentPatterns": ["(artifact).*?(build|create)"]
+      }
+    },
+    "git-commit-helper": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["commit message", "git commit", "conventional commit", "commit helper"],
+        "intentPatterns": ["(git).*?(commit)", "(commit).*?(message)"]
+      }
+    },
+    "mcp-builder": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["MCP builder", "build MCP", "MCP tool", "create MCP server"],
+        "intentPatterns": ["(build|create).*?(MCP|tool server)"]
+      }
+    },
+    "skill-creator": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["skill creator", "create skill", "new skill", "skill template"],
+        "intentPatterns": ["(create|new).*?(skill)"]
+      }
+    },
+    "webapp-testing": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["webapp test", "web app test", "browser test", "UI test", "functional test"],
+        "intentPatterns": ["(test).*?(webapp|web app|website|browser)"]
+      }
+    },
+    "zapier-workflows": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["Zapier", "zap", "automation", "workflow automation", "no-code automation"],
+        "intentPatterns": ["(Zapier).*?(workflow|automation)", "(zap).*?(create|build)"]
+      }
+    },
+    "docx": {
+      "type": "domain",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["Word", "docx", "document", "report", "letter", "proposal", "Word document"],
+        "intentPatterns": ["(create|generate|write).*?(Word|document|docx|report)", "(Word|docx).*?(document|file)"]
+      }
+    },
+    "pdf-anthropic": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["PDF", "PDF generation", "create PDF"],
+        "intentPatterns": ["(create|generate).*?(PDF)"]
+      }
+    },
+    "pdf-processing": {
+      "type": "domain",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["PDF", "extract PDF", "merge PDF", "split PDF", "PDF form", "fill PDF"],
+        "intentPatterns": ["(extract|merge|split|fill).*?(PDF)", "(PDF).*?(process|form)"]
+      }
+    },
+    "pdf-processing-pro": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["PDF pro", "advanced PDF", "PDF manipulation", "PDF OCR"],
+        "intentPatterns": ["(advanced|pro).*?(PDF)", "(PDF).*?(OCR|manipulation)"]
+      }
+    },
+    "pptx": {
+      "type": "domain",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["PowerPoint", "pptx", "presentation", "slides", "deck", "slide deck"],
+        "intentPatterns": ["(create|generate|make).*?(PowerPoint|presentation|slides|deck)", "(PowerPoint|pptx).*?(presentation|file)"]
+      }
+    },
+    "xlsx": {
+      "type": "domain",
+      "priority": "high",
+      "promptTriggers": {
+        "keywords": ["Excel", "xlsx", "spreadsheet", "workbook", "formula", "pivot table"],
+        "intentPatterns": ["(create|generate).*?(Excel|spreadsheet|xlsx)", "(Excel|xlsx).*?(file|workbook)"]
+      }
+    },
+    "brand-guidelines": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["brand", "branding", "brand guidelines", "style guide", "brand identity"],
+        "intentPatterns": ["(brand).*?(guidelines|style|identity)", "(create).*?(brand)"]
+      }
+    },
+    "email-composer": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["email", "compose email", "write email", "email template", "professional email"],
+        "intentPatterns": ["(write|compose|draft).*?(email)", "(email).*?(template|professional)"]
+      }
+    },
+    "excel-analysis": {
+      "type": "domain",
+      "priority": "medium",
+      "promptTriggers": {
+        "keywords": ["Excel analysis", "analyze spreadsheet", "data analysis", "Excel data"],
+        "intentPatterns": ["(analyze).*?(Excel|spreadsheet|data)", "(Excel).*?(analysis|analyze)"]
+      }
+    },
+    "internal-comms": {
+      "type": "domain",
+      "priority": "low",
+      "promptTriggers": {
+        "keywords": ["internal communication", "company announcement", "team update", "memo"],
+        "intentPatterns": ["(internal).*?(communication|announcement)", "(company|team).*?(update|memo)"]
       }
     }
   },
-  "notes": {
-    "customization": "Add your own skills with keywords and patterns that match your workflow",
-    "priority_levels": {
-      "critical": "Always shown, required for the task",
-      "high": "Strongly recommended",
-      "medium": "Suggested if relevant",
-      "low": "Optional, shown for reference"
-    }
+  "meta": {
+    "total_skills": 103,
+    "last_updated": "2025-01-01",
+    "notes": "Complete mapping of all plugin skills to keyword/pattern triggers. See README for customization guide."
   }
 }
