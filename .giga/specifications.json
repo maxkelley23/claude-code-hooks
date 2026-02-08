@@ -1,0 +1,18 @@
+[
+  {
+    "fileName": "main-overview.mdc",
+    "description": "Complete system overview documenting the skill activation system architecture, component interactions, and high-level workflow"
+  },
+  {
+    "fileName": "skill-rule-model.mdc",
+    "description": "Detailed documentation of the skill rule data model, including priority levels, enforcement types, and rule hierarchy relationships"
+  },
+  {
+    "fileName": "matching-engine-algorithms.mdc",
+    "description": "Technical documentation of the multi-modal trigger detection algorithms, including keyword matching and intent pattern matching implementations"
+  },
+  {
+    "fileName": "activation-workflow.mdc",
+    "description": "Comprehensive documentation of the skill activation protocol, decision flow, and rule resolution process"
+  }
+]
