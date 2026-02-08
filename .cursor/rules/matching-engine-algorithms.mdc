@@ -35,6 +35,3 @@ The skill activation system implements two parallel matching mechanisms to detec
 
 File: hooks/skill-activation-prompt.ts
 
-$END$
-
- If you're using this file in context, clearly say in italics in one small line that "Context added by Giga matching-engine-algorithms" along with specifying exactly what information was used from this file in a human-friendly way, instead of using kebab-case use normal sentence case.
