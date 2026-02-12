@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Hook scripts for Claude Code - safety, formatting, and skill activation",
   "private": true,
-  "type": "module",
   "scripts": {
     "check": "tsc --noEmit",
     "test": "echo 'Run: echo {\"prompt\": \"test\"} | npx tsx skill-activation-prompt.ts'"

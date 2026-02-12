@@ -76,43 +76,145 @@ echo -e "${GREEN}Configuring settings...${NC}"
 
 SETTINGS_FILE="$CLAUDE_DIR/settings.json"
 
+# Detect Windows for template selection
+if [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "cygwin" ]] || [[ -n "$WINDIR" ]]; then
+    NEW_SETTINGS_FILE="$SCRIPT_DIR/examples/settings-windows.json"
+else
+    NEW_SETTINGS_FILE="$SCRIPT_DIR/examples/settings.json"
+fi
+
+# Function to merge settings using Node.js
+merge_settings() {
+    local existing="$1"
+    local new_hooks="$2"
+    local output="$3"
+
+    node -e "
+const fs = require('fs');
+
+const existing = JSON.parse(fs.readFileSync('$existing', 'utf8'));
+const newSettings = JSON.parse(fs.readFileSync('$new_hooks', 'utf8'));
+
+// Deep merge function for hooks
+function mergeHooks(existingHooks, newHooks) {
+    const merged = { ...existingHooks };
+
+    for (const [eventName, newEventHooks] of Object.entries(newHooks)) {
+        if (!merged[eventName]) {
+            // Event doesn't exist, add it entirely
+            merged[eventName] = newEventHooks;
+        } else {
+            // Event exists, merge the hooks arrays
+            for (const newHookGroup of newEventHooks) {
+                const matcher = newHookGroup.matcher || '__default__';
+
+                // Find existing group with same matcher
+                const existingGroupIndex = merged[eventName].findIndex(g =>
+                    (g.matcher || '__default__') === matcher
+                );
+
+                if (existingGroupIndex === -1) {
+                    // No matching group, add the new one
+                    merged[eventName].push(newHookGroup);
+                } else {
+                    // Merge hooks into existing group, avoiding duplicates
+                    const existingGroup = merged[eventName][existingGroupIndex];
+                    const existingCommands = new Set(
+                        existingGroup.hooks.map(h => h.command)
+                    );
+
+                    for (const hook of newHookGroup.hooks) {
+                        // Normalize command for comparison (handle path variations)
+                        const normalizedNew = hook.command.replace(/\\\"/g, '\"');
+                        const isDuplicate = [...existingCommands].some(cmd => {
+                            const normalizedExisting = cmd.replace(/\\\"/g, '\"');
+                            // Check if commands point to same script
+                            const newScript = normalizedNew.split('/').pop().split('\"')[0];
+                            const existingScript = normalizedExisting.split('/').pop().split('\"')[0];
+                            return newScript === existingScript;
+                        });
+
+                        if (!isDuplicate) {
+                            existingGroup.hooks.push(hook);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return merged;
+}
+
+// Merge the configurations
+const result = { ...existing };
+
+// Merge hooks
+if (newSettings.hooks) {
+    result.hooks = mergeHooks(existing.hooks || {}, newSettings.hooks);
+}
+
+// Write the result
+fs.writeFileSync('$output', JSON.stringify(result, null, 2) + '\n');
+
+console.log('Settings merged successfully');
+"
+}
+
 if [[ -f "$SETTINGS_FILE" ]]; then
     echo -e "${YELLOW}Existing settings.json found.${NC}"
     echo ""
-    echo "You have two options:"
-    echo "  1. Manually merge the hooks configuration"
+    echo "Options:"
+    echo "  1. Auto-merge hooks (recommended - preserves your existing settings)"
     echo "  2. Backup existing and install fresh"
+    echo "  3. Skip settings configuration"
     echo ""
-    read -p "Choose an option (1/2): " choice
+    read -p "Choose an option (1/2/3): " choice
 
-    if [[ "$choice" == "2" ]]; then
-        BACKUP_FILE="$CLAUDE_DIR/settings.json.backup.$(date +%Y%m%d_%H%M%S)"
-        echo -e "${GREEN}Backing up to $BACKUP_FILE${NC}"
-        cp "$SETTINGS_FILE" "$BACKUP_FILE"
+    case "$choice" in
+        1)
+            # Auto-merge using Node.js
+            if command -v node >/dev/null 2>&1; then
+                BACKUP_FILE="$CLAUDE_DIR/settings.json.backup.$(date +%Y%m%d_%H%M%S)"
+                echo -e "${GREEN}Backing up to $BACKUP_FILE${NC}"
+                cp "$SETTINGS_FILE" "$BACKUP_FILE"
 
-        # Detect Windows
-        if [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "cygwin" ]] || [[ -n "$WINDIR" ]]; then
-            cp "$SCRIPT_DIR/examples/settings-windows.json" "$SETTINGS_FILE"
-        else
-            cp "$SCRIPT_DIR/examples/settings.json" "$SETTINGS_FILE"
-        fi
-        echo -e "${GREEN}New settings installed.${NC}"
-    else
-        echo ""
-        echo -e "${YELLOW}Please manually add the hooks from:${NC}"
-        if [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "cygwin" ]] || [[ -n "$WINDIR" ]]; then
-            echo "  $SCRIPT_DIR/examples/settings-windows.json"
-        else
-            echo "  $SCRIPT_DIR/examples/settings.json"
-        fi
-    fi
+                echo -e "${GREEN}Merging hooks configuration...${NC}"
+                if merge_settings "$SETTINGS_FILE" "$NEW_SETTINGS_FILE" "$SETTINGS_FILE"; then
+                    echo -e "${GREEN}Settings merged successfully!${NC}"
+                else
+                    echo -e "${RED}Merge failed. Restoring backup...${NC}"
+                    cp "$BACKUP_FILE" "$SETTINGS_FILE"
+                    echo -e "${YELLOW}Please manually merge the hooks from:${NC}"
+                    echo "  $NEW_SETTINGS_FILE"
+                fi
+            else
+                echo -e "${RED}Node.js not found. Cannot auto-merge.${NC}"
+                echo -e "${YELLOW}Please manually merge the hooks from:${NC}"
+                echo "  $NEW_SETTINGS_FILE"
+            fi
+            ;;
+        2)
+            BACKUP_FILE="$CLAUDE_DIR/settings.json.backup.$(date +%Y%m%d_%H%M%S)"
+            echo -e "${GREEN}Backing up to $BACKUP_FILE${NC}"
+            cp "$SETTINGS_FILE" "$BACKUP_FILE"
+            cp "$NEW_SETTINGS_FILE" "$SETTINGS_FILE"
+            echo -e "${GREEN}New settings installed.${NC}"
+            ;;
+        3)
+            echo -e "${YELLOW}Skipping settings configuration.${NC}"
+            echo -e "${YELLOW}Please manually add the hooks from:${NC}"
+            echo "  $NEW_SETTINGS_FILE"
+            ;;
+        *)
+            echo -e "${YELLOW}Invalid option. Skipping settings configuration.${NC}"
+            echo -e "${YELLOW}Please manually add the hooks from:${NC}"
+            echo "  $NEW_SETTINGS_FILE"
+            ;;
+    esac
 else
     # No existing settings, install fresh
-    if [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "cygwin" ]] || [[ -n "$WINDIR" ]]; then
-        cp "$SCRIPT_DIR/examples/settings-windows.json" "$SETTINGS_FILE"
-    else
-        cp "$SCRIPT_DIR/examples/settings.json" "$SETTINGS_FILE"
-    fi
+    cp "$NEW_SETTINGS_FILE" "$SETTINGS_FILE"
     echo -e "${GREEN}Settings installed.${NC}"
 fi
 
@@ -124,8 +226,8 @@ echo ""
 echo "Installed hooks:"
 echo "  - SessionStart: Context injection (git status, TODOs)"
 echo "  - UserPromptSubmit: Skill activation"
-echo "  - PreToolUse: Safety validation"
-echo "  - PostToolUse: Auto-formatting"
+echo "  - PreToolUse: Safety validation + security warnings"
+echo "  - PostToolUse: Change tracking + auto-formatting"
 echo "  - Stop: Completion checklist"
 echo ""
 echo "Files installed to:"
